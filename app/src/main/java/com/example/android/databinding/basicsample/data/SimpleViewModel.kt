@@ -40,3 +40,5 @@ class SimpleViewModel : ViewModel() {
     _likes.value = (_likes.value ?: 0) + 1
   }
 }
+
+

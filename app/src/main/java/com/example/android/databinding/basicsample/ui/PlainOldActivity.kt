@@ -18,7 +18,6 @@ package com.example.android.databinding.basicsample.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +25,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android.databinding.basicsample.R
 import com.example.android.databinding.basicsample.data.SimpleViewModel
 
-/**
- * Plain old activity with lots of problems to fix.
- */
 class PlainOldActivity : AppCompatActivity() {
 
   // Obtain ViewModel from ViewModelProviders
@@ -39,7 +35,6 @@ class PlainOldActivity : AppCompatActivity() {
 
     setContentView(R.layout.plain_activity)
 
-    // TODO: Explicitly setting initial values is a bad pattern. We'll fix that.
     updateName()
     updateLikes()
   }
@@ -71,8 +66,5 @@ class PlainOldActivity : AppCompatActivity() {
     findViewById<TextView>(R.id.likes).text = viewModel.likes.toString()
     findViewById<ProgressBar>(R.id.progressBar).progress =
       (viewModel.likes * 100 / 5).coerceAtMost(100)
-    val image = findViewById<ImageView>(R.id.imageView)
-
   }
-
 }

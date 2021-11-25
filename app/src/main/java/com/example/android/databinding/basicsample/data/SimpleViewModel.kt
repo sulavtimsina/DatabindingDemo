@@ -16,27 +16,21 @@
 
 package com.example.android.databinding.basicsample.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 /**
  * A simple VM for [com.example.android.databinding.basicsample.ui.PlainOldActivity].
  */
 class SimpleViewModel : ViewModel() {
-  val _name = MutableLiveData("Ada")
-  val _lastName = MutableLiveData("Lovelace")
-  var _likes = MutableLiveData(0)
-
-  val name: LiveData<String> = _name
-  val lastName: LiveData<String> = _lastName
-  val likes: LiveData<Int> = _likes
+  val name = "Grace"
+  val lastName = "Hopper"
+  var likes = 0
+    private set // This is to prevent external modification of the variable.
 
   /**
    * Increments the number of likes.
    */
   fun onLike() {
-    _likes.value = (_likes.value ?: 0) + 1
+    likes++
   }
 }

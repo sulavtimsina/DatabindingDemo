@@ -17,29 +17,62 @@
 package com.example.android.databinding.basicsample.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.databinding.basicsample.R
 import com.example.android.databinding.basicsample.data.SimpleViewModel
-import com.example.android.databinding.basicsample.databinding.PlainActivityBinding
 
 /**
  * Plain old activity with lots of problems to fix.
  */
 class PlainOldActivity : AppCompatActivity() {
 
+  // Obtain ViewModel from ViewModelProviders
   private val viewModel by lazy { ViewModelProviders.of(this).get(SimpleViewModel::class.java) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val binding: PlainActivityBinding =
-      DataBindingUtil.setContentView(this, R.layout.plain_activity)
+    setContentView(R.layout.plain_activity)
 
-    binding.lifecycleOwner = this
+    // TODO: Explicitly setting initial values is a bad pattern. We'll fix that.
+    updateName()
+    updateLikes()
+  }
 
-    binding.viewmodel = viewModel
+  /**
+   * This method is triggered by the `android:onclick` attribute in the layout. It puts business
+   * logic in the activity, which is not ideal. We should do something about that.
+   */
+  fun onLike(view: View) {
+    viewModel.onLike()
+    updateLikes()
+  }
+
+  /**
+   * So much findViewById! We'll fix that with Data Binding.
+   */
+  private fun updateName() {
+    findViewById<TextView>(R.id.plain_name).text = viewModel.name
+    findViewById<TextView>(R.id.plain_lastname).text = viewModel.lastName
+  }
+
+  /**
+   * This method has many problems:
+   * - It's calling findViewById multiple times
+   * - It has untestable logic
+   * - It's updating two views when called even if they're not changing
+   */
+  private fun updateLikes() {
+    findViewById<TextView>(R.id.likes).text = viewModel.likes.toString()
+    findViewById<ProgressBar>(R.id.progressBar).progress =
+      (viewModel.likes * 100 / 5).coerceAtMost(100)
+    val image = findViewById<ImageView>(R.id.imageView)
 
   }
+
 }
